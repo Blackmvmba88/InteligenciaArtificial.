@@ -46,7 +46,7 @@ Sensores → EventBus → CognitiveCore → ReasoningEngine → EventBus → Act
 ```bash
 # Clonar el repositorio
 git clone https://github.com/Blackmvmba88/InteligenciaArtificial.git
-cd InteligenciaArtificial.
+cd InteligenciaArtificial
 
 # (Opcional) Crear entorno virtual
 python3 -m venv venv

@@ -5,7 +5,7 @@
 ```bash
 # Clonar el repositorio
 git clone https://github.com/Blackmvmba88/InteligenciaArtificial.git
-cd InteligenciaArtificial.
+cd InteligenciaArtificial
 
 # Ejecutar pruebas
 python3 test_framework.py
