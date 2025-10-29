@@ -6,8 +6,11 @@ Framework modular de IA ligera y evolutiva con arquitectura asincrónica basada 
 
 Framework vivo de IA ligera, hecho para aprender, percibir y crear. Código limpio, adaptable y con conciencia de su propio entorno. Implementa un núcleo cognitivo completo con memoria persistente, razonamiento simbólico adaptable y arquitectura extensible mediante sensores y actuadores.
 
+**🧬 MambaCore v2** añade capacidades multimodales: visión, audio y lenguaje integrados en una sola conciencia cognitiva.
+
 ## Características
 
+### Core Framework
 - 🧠 **Núcleo Cognitivo**: Ciclo completo perceive → think → act
 - 💾 **Memoria Persistente**: Sistema de memoria con JSON para corto y largo plazo
 - 🎯 **Razonamiento Adaptable**: Motor de razonamiento simbólico con reglas priorizadas
@@ -15,16 +18,31 @@ Framework vivo de IA ligera, hecho para aprender, percibir y crear. Código limp
 - 🔌 **Modular y Extensible**: Fácil integración de sensores y actuadores personalizados
 - 🌐 **Portable**: Compatible con Python 3.10+, Mac, Linux, Termux y Raspberry Pi
 
+### MambaCore v2 (Multimodal)
+- 🎨 **VisionModule**: Interfaz para generación de imágenes (Stable Diffusion, ComfyUI)
+- 🎵 **AudioModule**: Generación de música y síntesis de voz (Suno, TTS local)
+- 💬 **CommandInterface**: CLI Mamba para comandos en lenguaje natural
+- 🔗 **SynapseBridge**: Puente de comunicación multimodal (texto↔imagen↔audio)
+- 🌐 **Cognitive Mesh**: Arquitectura preparada para cognición distribuida
+- ⚛️ **QuantumBridge**: Motor de resonancia creativa (en desarrollo)
+
 ## Arquitectura
 
 ### Componentes Principales
 
+**Framework Base:**
 1. **EventBus**: Sistema de eventos asíncrono para comunicación desacoplada entre módulos
 2. **CognitiveCore**: Núcleo cognitivo que implementa el ciclo perceive → think → act
 3. **MemoryModule**: Sistema de memoria con persistencia JSON
 4. **ReasoningEngine**: Motor de razonamiento simbólico con reglas adaptables
 5. **Sensors**: Abstracciones de entrada (sensores)
 6. **Actuators**: Abstracciones de salida (actuadores)
+
+**MambaCore v2 (Multimodal):**
+7. **VisionModule**: Generación y análisis de imágenes
+8. **AudioModule**: Generación de audio y música
+9. **CommandInterface**: CLI inteligente (MambaCLI)
+10. **SynapseBridge**: Sincronización multimodal
 
 ### Flujo de Datos
 
@@ -86,6 +104,25 @@ Este ejemplo permite:
 - Ver cómo el núcleo cognitivo procesa la entrada
 - Observar decisiones y acciones del sistema
 
+### MambaCore v2 - Multimodal
+
+Ejecutar el sistema multimodal con visión, audio y lenguaje:
+
+```bash
+# Demo automático con ejemplos
+python3 examples_mambacore_v2.py
+
+# Modo interactivo
+python3 examples_mambacore_v2_interactive.py
+```
+
+Comandos MambaCLI:
+- `vision <descripción>` - Generar imagen
+- `audio <descripción>` - Generar música
+- `speech <texto>` - Síntesis de voz
+- `status` - Estado del sistema
+- `exit` - Salir
+
 ### Crear tu Propio Sistema
 
 ```python
@@ -139,18 +176,28 @@ if __name__ == "__main__":
 InteligenciaArtificial./
 ├── src/
 │   ├── core/
-│   │   ├── event_bus.py          # Sistema de eventos
-│   │   └── cognitive_core.py     # Núcleo cognitivo
+│   │   ├── event_bus.py              # Sistema de eventos
+│   │   └── cognitive_core.py         # Núcleo cognitivo
 │   ├── modules/
-│   │   ├── memory_module.py      # Módulo de memoria
-│   │   └── reasoning_engine.py   # Motor de razonamiento
+│   │   ├── memory_module.py          # Módulo de memoria
+│   │   └── reasoning_engine.py       # Motor de razonamiento
+│   ├── multimodal/                   # 🧬 MambaCore v2
+│   │   ├── vision_module.py          # Generación de imágenes
+│   │   ├── audio_module.py           # Generación de audio
+│   │   ├── command_interface.py      # CLI Mamba
+│   │   └── synapse_bridge.py         # Puente multimodal
 │   └── examples/
-│       ├── sensor.py              # Ejemplos de sensores
-│       └── actuator.py            # Ejemplos de actuadores
-├── examples_basic.py              # Ejemplo básico
-├── examples_interactive.py        # Ejemplo interactivo
-├── requirements.txt               # Dependencias
-└── README.md                      # Este archivo
+│       ├── sensor.py                 # Ejemplos de sensores
+│       └── actuator.py               # Ejemplos de actuadores
+├── examples_basic.py                 # Ejemplo básico
+├── examples_interactive.py           # Ejemplo interactivo
+├── examples_mambacore_v2.py          # 🧬 Demo MambaCore v2
+├── examples_mambacore_v2_interactive.py  # 🧬 Modo interactivo v2
+├── test_framework.py                 # Tests del framework base
+├── test_mambacore_v2.py              # 🧬 Tests multimodales
+├── requirements.txt                  # Dependencias
+├── QUICKSTART.md                     # Guía rápida
+└── README.md                         # Este archivo
 ```
 
 ## Extender el Framework
