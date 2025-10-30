@@ -1,0 +1,2 @@
+# Minimal dependencies for lightweight AI framework
+# Compatible with Python 3.10+
