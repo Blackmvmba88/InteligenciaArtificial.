@@ -43,13 +43,51 @@ class ReasoningEngine:
     Utiliza reglas para tomar decisiones basadas en el contexto.
     """
     
-    def __init__(self):
+    def __init__(self, max_rules: int = 100):
+        """
+        Inicializar motor de razonamiento
+        
+        Args:
+            max_rules: Número máximo de reglas permitidas
+        
+        Raises:
+            ValueError: Si max_rules <= 0
+        """
+        if max_rules <= 0:
+            raise ValueError("max_rules debe ser positivo")
+        
+        self._max_rules = max_rules
         self._rules: List[Rule] = []
         self._reasoning_history: List[Dict] = []
         self._adaptive_weights: Dict[str, float] = {}
         
     def add_rule(self, name: str, condition: callable, action: callable, priority: int = 0) -> None:
-        """Añadir una nueva regla de razonamiento"""
+        """
+        Añadir una nueva regla de razonamiento
+        
+        Args:
+            name: Nombre único de la regla
+            condition: Función que evalúa si la regla se aplica
+            action: Función que ejecuta la acción de la regla
+            priority: Prioridad de la regla (mayor = más prioridad)
+        
+        Raises:
+            ValueError: Si los parámetros son inválidos
+            RuntimeError: Si se excede el máximo de reglas
+        """
+        if not name or not isinstance(name, str):
+            raise ValueError("name debe ser una cadena no vacía")
+        if not callable(condition):
+            raise ValueError("condition debe ser una función callable")
+        if not callable(action):
+            raise ValueError("action debe ser una función callable")
+        if len(self._rules) >= self._max_rules:
+            raise RuntimeError(f"Se alcanzó el máximo de reglas ({self._max_rules})")
+        
+        # Verificar si ya existe una regla con el mismo nombre
+        if any(r.name == name for r in self._rules):
+            raise ValueError(f"Ya existe una regla con el nombre '{name}'")
+        
         rule = Rule(name, condition, action, priority)
         self._rules.append(rule)
         self._rules.sort(key=lambda r: r.priority, reverse=True)

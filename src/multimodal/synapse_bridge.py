@@ -18,6 +18,21 @@ class SynapseBridge:
     """
     
     def __init__(self, event_bus: EventBus, context_window: int = 50):
+        """
+        Inicializar puente sináptico multimodal
+        
+        Args:
+            event_bus: Bus de eventos
+            context_window: Tamaño de ventana de contexto
+        
+        Raises:
+            ValueError: Si los parámetros son inválidos
+        """
+        if event_bus is None:
+            raise ValueError("event_bus no puede ser None")
+        if context_window <= 0:
+            raise ValueError("context_window debe ser positivo")
+        
         self.event_bus = event_bus
         self.context_window = context_window
         
@@ -172,7 +187,21 @@ class SynapseBridge:
         return unified_list[-limit:] if unified_list else []
         
     def get_context_by_modality(self, modality: str, limit: int = 10) -> List[Dict[str, Any]]:
-        """Obtener contexto de una modalidad específica"""
+        """
+        Obtener contexto de una modalidad específica
+        
+        Args:
+            modality: Modalidad a consultar ("vision", "audio", "text", "unified")
+            limit: Número máximo de entradas a retornar
+        
+        Returns:
+            Lista de entradas de contexto
+        
+        Raises:
+            ValueError: Si limit <= 0
+        """
+        if limit <= 0:
+            raise ValueError("limit debe ser positivo")
         if modality not in self.shared_context:
             return []
         context_list = list(self.shared_context[modality])

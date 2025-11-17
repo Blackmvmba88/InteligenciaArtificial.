@@ -17,6 +17,24 @@ class VisionModule(Sensor):
     """
     
     def __init__(self, name: str, event_bus: EventBus, backend: str = "mock"):
+        """
+        Inicializar módulo de visión
+        
+        Args:
+            name: Nombre del módulo
+            event_bus: Bus de eventos
+            backend: Backend de generación ("mock", "stable_diffusion", "comfyui")
+        
+        Raises:
+            ValueError: Si los parámetros son inválidos
+        """
+        if not name or not isinstance(name, str):
+            raise ValueError("name debe ser una cadena no vacía")
+        if event_bus is None:
+            raise ValueError("event_bus no puede ser None")
+        if backend not in ["mock", "stable_diffusion", "comfyui"]:
+            raise ValueError(f"Backend no soportado: {backend}")
+        
         super().__init__(name, event_bus)
         self.backend = backend
         self._prompt_queue = asyncio.Queue()
@@ -97,14 +115,37 @@ class VisionModule(Sensor):
         }
         
     async def generate(self, prompt: str) -> None:
-        """Método público para solicitar generación de imagen"""
+        """
+        Método público para solicitar generación de imagen
+        
+        Args:
+            prompt: Descripción de la imagen a generar
+        
+        Raises:
+            ValueError: Si prompt está vacío
+        """
+        if not prompt or not isinstance(prompt, str):
+            raise ValueError("prompt debe ser una cadena no vacía")
+        
         await self._prompt_queue.put(prompt)
         
     async def analyze_image(self, image_path: str) -> Dict[str, Any]:
         """
         Analizar una imagen existente
         TODO: Integrar con CLIP, BLIP u otros modelos de visión
+        
+        Args:
+            image_path: Ruta a la imagen a analizar
+        
+        Returns:
+            Diccionario con análisis de la imagen
+        
+        Raises:
+            ValueError: Si image_path está vacío
         """
+        if not image_path or not isinstance(image_path, str):
+            raise ValueError("image_path debe ser una cadena no vacía")
+        
         return {
             "type": "vision_analysis",
             "image_path": image_path,

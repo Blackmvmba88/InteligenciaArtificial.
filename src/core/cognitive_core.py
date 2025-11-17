@@ -17,12 +17,27 @@ class CognitiveCore:
     """
     
     def __init__(self, event_bus: EventBus, memory_module=None, reasoning_engine=None):
+        """
+        Inicializar núcleo cognitivo
+        
+        Args:
+            event_bus: Bus de eventos para comunicación
+            memory_module: Módulo de memoria opcional
+            reasoning_engine: Motor de razonamiento opcional
+        
+        Raises:
+            ValueError: Si event_bus es None
+        """
+        if event_bus is None:
+            raise ValueError("event_bus no puede ser None")
+        
         self.event_bus = event_bus
         self.memory = memory_module
         self.reasoning = reasoning_engine
         self._state = "idle"
         self._perceptions: List[Any] = []
         self._running = False
+        self._max_perceptions = 100  # Límite de percepciones en memoria
         
         # Suscribirse a eventos de percepción
         self.event_bus.subscribe("perception", self._on_perception)
@@ -35,7 +50,17 @@ class CognitiveCore:
     async def perceive(self, data: Any, source: str = "sensor") -> None:
         """
         Fase de percepción: Recibir y procesar información del entorno
+        
+        Args:
+            data: Datos de percepción
+            source: Fuente de los datos
+        
+        Raises:
+            ValueError: Si source está vacío
         """
+        if not source or not isinstance(source, str):
+            raise ValueError("source debe ser una cadena no vacía")
+        
         perception = {
             "data": data,
             "source": source,
@@ -43,6 +68,10 @@ class CognitiveCore:
         }
         
         self._perceptions.append(perception)
+        
+        # Limitar percepciones para evitar crecimiento excesivo
+        if len(self._perceptions) > self._max_perceptions:
+            self._perceptions = self._perceptions[-self._max_perceptions:]
         
         # Guardar en memoria si disponible
         if self.memory:
@@ -124,7 +153,16 @@ class CognitiveCore:
     async def run(self, cycle_interval: float = 1.0) -> None:
         """
         Ejecutar el núcleo cognitivo continuamente
+        
+        Args:
+            cycle_interval: Intervalo entre ciclos cognitivos (segundos)
+        
+        Raises:
+            ValueError: Si cycle_interval <= 0
         """
+        if cycle_interval <= 0:
+            raise ValueError("cycle_interval debe ser positivo")
+        
         self._running = True
         self._state = "running"
         
