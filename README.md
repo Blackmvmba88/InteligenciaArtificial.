@@ -17,6 +17,7 @@ Framework vivo de IA ligera, hecho para aprender, percibir y crear. Código limp
 - ⚡ **Arquitectura Asíncrona**: Sistema basado en eventos con asyncio
 - 🔌 **Modular y Extensible**: Fácil integración de sensores y actuadores personalizados
 - 🌐 **Portable**: Compatible con Python 3.10+, Mac, Linux, Termux y Raspberry Pi
+- ✅ **Optimizado y Validado**: Validación de entrada completa y límites de recursos configurables
 
 ### MambaCore v2 (Multimodal)
 - 🎨 **VisionModule**: Interfaz para generación de imágenes (Stable Diffusion, ComfyUI)
@@ -264,6 +265,18 @@ reasoning.add_rule(
 3. **Ligereza**: Sin dependencias pesadas, solo biblioteca estándar
 4. **Evolutivo**: Diseñado para crecer y adaptarse
 5. **Asíncrono**: Arquitectura no bloqueante con asyncio
+6. **Seguro**: Validación completa de entradas y manejo robusto de errores
+
+### Optimizaciones y Validación
+
+El framework incluye optimizaciones de rendimiento y validación de entrada:
+
+- **Límites de Recursos**: Todos los módulos tienen límites configurables para prevenir crecimiento ilimitado
+- **Validación de Entrada**: Validación completa de parámetros con mensajes de error claros
+- **Gestión de Memoria**: Limpieza automática y límites por tipo de dato
+- **Tests Completos**: 19 tests cubriendo funcionalidad, validación y seguridad
+
+Ver [OPTIMIZATIONS.md](OPTIMIZATIONS.md) para detalles completos sobre optimizaciones implementadas.
 
 ### Contribuir
 
