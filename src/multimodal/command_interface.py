@@ -17,6 +17,22 @@ class CommandInterface(Actuator):
     """
     
     def __init__(self, name: str, event_bus: EventBus, verbose: bool = True):
+        """
+        Inicializar interfaz de comandos
+        
+        Args:
+            name: Nombre del actuador
+            event_bus: Bus de eventos
+            verbose: Si mostrar mensajes detallados
+        
+        Raises:
+            ValueError: Si los parámetros son inválidos
+        """
+        if not name or not isinstance(name, str):
+            raise ValueError("name debe ser una cadena no vacía")
+        if event_bus is None:
+            raise ValueError("event_bus no puede ser None")
+        
         super().__init__(name, event_bus)
         self.verbose = verbose
         self._command_history = []
@@ -101,7 +117,16 @@ class CommandInterface(Actuator):
         """
         Ejecutar comando en lenguaje natural.
         Parsea el comando y emite eventos apropiados.
+        
+        Args:
+            command: Comando a ejecutar
+        
+        Raises:
+            ValueError: Si command está vacío
         """
+        if not command or not isinstance(command, str):
+            raise ValueError("command debe ser una cadena no vacía")
+        
         command_lower = command.lower().strip()
         
         # Comandos de visión

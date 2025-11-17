@@ -17,6 +17,24 @@ class AudioModule(Sensor):
     """
     
     def __init__(self, name: str, event_bus: EventBus, backend: str = "mock"):
+        """
+        Inicializar módulo de audio
+        
+        Args:
+            name: Nombre del módulo
+            event_bus: Bus de eventos
+            backend: Backend de generación ("mock", "suno", "tts_local", "music_gen")
+        
+        Raises:
+            ValueError: Si los parámetros son inválidos
+        """
+        if not name or not isinstance(name, str):
+            raise ValueError("name debe ser una cadena no vacía")
+        if event_bus is None:
+            raise ValueError("event_bus no puede ser None")
+        if backend not in ["mock", "suno", "tts_local", "music_gen"]:
+            raise ValueError(f"Backend no soportado: {backend}")
+        
         super().__init__(name, event_bus)
         self.backend = backend
         self._generation_queue = asyncio.Queue()
@@ -121,7 +139,19 @@ class AudioModule(Sensor):
         }
         
     async def generate_music(self, description: str, style: str = "default") -> None:
-        """Método público para solicitar generación de música"""
+        """
+        Método público para solicitar generación de música
+        
+        Args:
+            description: Descripción de la música a generar
+            style: Estilo musical (default: "default")
+        
+        Raises:
+            ValueError: Si description está vacío
+        """
+        if not description or not isinstance(description, str):
+            raise ValueError("description debe ser una cadena no vacía")
+        
         await self._generation_queue.put({
             "type": "music",
             "text": description,
@@ -129,7 +159,19 @@ class AudioModule(Sensor):
         })
         
     async def generate_speech(self, text: str, voice: str = "default") -> None:
-        """Método público para solicitar síntesis de voz"""
+        """
+        Método público para solicitar síntesis de voz
+        
+        Args:
+            text: Texto a convertir en voz
+            voice: Voz a utilizar (default: "default")
+        
+        Raises:
+            ValueError: Si text está vacío
+        """
+        if not text or not isinstance(text, str):
+            raise ValueError("text debe ser una cadena no vacía")
+        
         await self._generation_queue.put({
             "type": "tts",
             "text": text,
@@ -137,7 +179,18 @@ class AudioModule(Sensor):
         })
         
     async def generate_sound(self, description: str) -> None:
-        """Método público para solicitar generación de efectos de sonido"""
+        """
+        Método público para solicitar generación de efectos de sonido
+        
+        Args:
+            description: Descripción del sonido a generar
+        
+        Raises:
+            ValueError: Si description está vacío
+        """
+        if not description or not isinstance(description, str):
+            raise ValueError("description debe ser una cadena no vacía")
+        
         await self._generation_queue.put({
             "type": "sound_effect",
             "text": description
